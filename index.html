@@ -149,6 +149,13 @@ input[type="range"] { width: 110px; accent-color: var(--accent); }
   </div>
 </section>
 
+<!-- the import map must come before any module preload, or browsers cannot resolve "three" -->
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
 <script>/* start the model download now, alongside the 3D engine, not after it */
 window.__modelReq = fetch("oskar-16426d45f4.wasm");</script>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js">
@@ -176,12 +183,6 @@ window.__modelReq = fetch("oskar-16426d45f4.wasm");</script>
   </div>
 </div>
 
-<script type="importmap">
-{ "imports": {
-  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-} }
-</script>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';

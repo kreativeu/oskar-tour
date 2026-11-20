@@ -383,39 +383,39 @@ function addInterior(model) {
   const glass = meshes.filter(o => (o.material.name || '').toLowerCase().includes('glass'));
   if (!glass.length) return;
   /*
-    One omni light per glazed room, placed at the centre of each room's volume.
+    One omni light per room, halfway between its floor and ceiling (measured in the model).
     Positions come from the Oskar floor plans (ground floor ±0.00, first floor +3.06) fitted to the
     model's own walls; coordinates are in the model's file units (metres).
     [name, x, y, z, intensity (cd), reach (m), casts shadow]
   */
   const ROOMS = [
     // ground floor
-    ['A1 Living (double height)', 20.20, 3.20, -25.50, 30, 10, true],
-    ['A1 Living / kitchen',       20.50, 1.65, -17.90, 20,  8, true],
-    ['A10 Rest area',             25.60, 1.65, -32.10, 16,  7, true],
-    ['A4 Master bedroom',         26.55, 1.65, -27.03,  9,  4.5, false],
-    ['A5 Master bathroom',        27.39, 1.65, -23.88,  4,  2.6, false],
-    ['A7 Bathroom',               26.60, 1.65, -22.38,  4,  2.6, false],
-    ['A6 Bedroom',                26.57, 1.65, -19.71,  9,  4.5, false],
-    ['A8 Technical room',         26.47, 1.65, -16.46,  5,  3.2, false],
-    ['A9 Food pantry',            26.60, 1.65, -14.48,  4,  2.6, false],
-    ['A2 Hallway (west)',         23.90, 1.65, -25.50,  5,  3.5, false],
-    ['A2 Hallway (east)',         23.67, 1.65, -19.66,  5,  3.5, false],
-    ['A11 Corridor',              23.20, 1.65, -38.10,  5,  3.8, false],
-    ['A12/A13 Shower & toilet',   27.50, 1.65, -36.96,  4,  2.6, false],
-    ['A15 Tool shed',             27.60, 1.65, -39.60,  5,  3.2, false],
-    ['A16 Garage',                23.76, 1.65,  -7.48, 10,  5.5, false],
-    ['A17 Tool shed',             27.70, 1.65,  -7.50,  4,  3.0, false],
+    ['A1 Living (double height)', 20.20, 2.91, -25.50, 30, 10, true],
+    ['A1 Living / kitchen',       20.50, 1.38, -17.90, 20,  8, true],
+    ['A10 Rest area',             25.60, 1.38, -32.10, 16,  7, true],
+    ['A4 Master bedroom',         26.55, 1.38, -27.03,  9,  4.5, false],
+    ['A5 Master bathroom',        27.39, 1.38, -23.88,  4,  2.6, false],
+    ['A7 Bathroom',               26.60, 1.38, -22.38,  4,  2.6, false],
+    ['A6 Bedroom',                26.57, 1.38, -19.71,  9,  4.5, false],
+    ['A8 Technical room',         26.47, 1.38, -16.46,  5,  3.2, false],
+    ['A9 Food pantry',            26.60, 1.38, -14.48,  4,  2.6, false],
+    ['A2 Hallway (west)',         23.90, 1.38, -25.50,  5,  3.5, false],
+    ['A2 Hallway (east)',         23.67, 1.38, -19.66,  5,  3.5, false],
+    ['A11 Corridor',              23.20, 1.38, -38.10,  5,  3.8, false],
+    ['A12/A13 Shower & toilet',   27.50, 1.38, -36.96,  4,  2.6, false],
+    ['A15 Tool shed',             27.60, 1.38, -39.60,  5,  3.2, false],
+    ['A16 Garage',                23.76, 1.29,  -7.48, 10,  5.5, false],
+    ['A17 Tool shed',             27.70, 1.38,  -7.50,  4,  3.0, false],
     // first floor
-    ['B1 Living / kitchen',       20.54, 5.00, -17.83, 18,  8, true],
-    ['B10 Hallway & stairs',      23.35, 5.00, -25.53,  6,  4.5, false],
-    ['B2 Hallway',                23.67, 5.00, -18.98,  5,  3.5, false],
-    ['B11 Bedroom',               26.50, 5.00, -27.43,  9,  4.5, false],
-    ['B13 Toilet',                28.17, 5.00, -25.55,  3,  2.2, false],
-    ['B12 Bedroom',               26.51, 5.00, -23.61,  9,  4.5, false],
-    ['B5 Bedroom',                26.50, 5.00, -19.68,  9,  4.5, false],
-    ['B7 Toilet',                 28.17, 5.00, -17.77,  3,  2.2, false],
-    ['B6 Bedroom',                26.50, 5.00, -15.86,  9,  4.5, false],
+    ['B1 Living / kitchen',       20.54, 4.44, -17.83, 18,  8, true],
+    ['B10 Hallway & stairs',      23.35, 4.44, -25.53,  6,  4.5, false],
+    ['B2 Hallway',                23.67, 4.44, -18.98,  5,  3.5, false],
+    ['B11 Bedroom',               26.50, 4.44, -27.43,  9,  4.5, false],
+    ['B13 Toilet',                28.17, 4.44, -25.55,  3,  2.2, false],
+    ['B12 Bedroom',               26.51, 4.44, -23.61,  9,  4.5, false],
+    ['B5 Bedroom',                26.50, 4.44, -19.68,  9,  4.5, false],
+    ['B7 Toilet',                 28.17, 4.44, -17.77,  3,  2.2, false],
+    ['B6 Bedroom',                26.50, 4.44, -15.86,  9,  4.5, false],
   ];
   for (const [name, x, y, z, cd, reach, shadow] of ROOMS) {
     const lamp = new THREE.PointLight(WARM, cd, reach, 2);

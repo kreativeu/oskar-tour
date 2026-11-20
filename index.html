@@ -1,0 +1,793 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Oskar Concept Tour</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: full-bleed photo studio; quiet label card top-left, camera + light controls in a glass strip along the bottom */
+:root {
+  --cove: #262624;        /* dim studio, seamless backdrop */
+  --ink: #f1efe9;
+  --ink-soft: #a9a59c;
+  --panel: rgba(30, 29, 27, 0.72);
+  --line: rgba(241, 239, 233, 0.14);
+  --accent: #d77447;      /* KREATIV brick */
+  --on-accent: #1a1918;
+  color-scheme: dark;
+  --font-display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cove: #2a2926; --ink: #f1efe9; --ink-soft: #a9a59c;
+    --panel: rgba(30, 29, 27, 0.78); --line: rgba(241, 239, 233, 0.14);
+    --accent: #d77447; --on-accent: #1a1918; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --cove: #2a2926; --ink: #f1efe9; --ink-soft: #a9a59c;
+  --panel: rgba(30, 29, 27, 0.78); --line: rgba(241, 239, 233, 0.14);
+  --accent: #d77447; --on-accent: #1a1918; color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  background: var(--cove); color: var(--ink);
+  font-family: var(--font-body); font-size: 14px; overflow: hidden;
+}
+#stage { position: fixed; inset: 0; }
+#stage canvas { display: block; width: 100%; height: 100%; touch-action: none; outline: none; }
+
+.label {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 16px);
+  left: max(16px, env(safe-area-inset-left, 0px));
+  max-width: min(340px, calc(100vw - 32px));
+  background: var(--panel); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+  display: grid; gap: 8px;
+}
+.brand { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.22em; font-size: 12px; }
+.brand span { color: var(--accent); }
+h1 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.2; text-wrap: balance; }
+.dims { font-family: var(--font-data); font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.dims b { color: var(--ink); font-weight: 500; }
+
+.bar {
+  position: fixed; left: 0; right: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; justify-content: center; pointer-events: none;
+}
+.controls {
+  pointer-events: auto;
+  background: var(--panel); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--line); border-radius: 12px; padding: 8px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; max-width: 100%;
+}
+.group { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.sep { width: 1px; align-self: stretch; background: var(--line); }
+.cap { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); padding: 0 4px 0 6px; }
+button {
+  font: 500 13px/1 var(--font-body); color: var(--ink); background: transparent;
+  border: 1px solid transparent; border-radius: 7px; padding: 8px 11px; cursor: pointer;
+}
+button:hover { border-color: var(--line); }
+button[aria-pressed="true"] { background: var(--ink); color: var(--cove); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.slider { display: flex; align-items: center; gap: 8px; padding: 0 6px; }
+.slider output { font-family: var(--font-data); font-size: 12px; min-width: 44px; font-variant-numeric: tabular-nums; }
+input[type="range"] { width: 110px; accent-color: var(--accent); }
+
+.loader {
+  position: fixed; inset: 0; display: grid; place-items: center; pointer-events: none;
+}
+.loader .box { display: grid; gap: 10px; width: min(260px, 70vw); text-align: center; }
+.loader .track { height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.loader .fill { height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+.loader p { margin: 0; font-family: var(--font-data); font-size: 12px; color: var(--ink-soft); }
+.hint { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(env(safe-area-inset-top, 0px) + 16px);
+  font-size: 12px; color: var(--ink-soft); }
+@media (max-width: 640px) {
+  .hint { display: none; }
+  h1 { font-size: 17px; }
+  input[type="range"] { width: 84px; }
+  .sep { display: none; }
+}
+.fade { position: fixed; inset: 0; background: var(--cove); opacity: 0; pointer-events: none; transition: opacity .35s ease; }
+.fade.on { opacity: 1; }
+.tour {
+  position: fixed;
+  left: max(16px, env(safe-area-inset-left, 0px));
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  width: min(380px, calc(100vw - 32px));
+  background: var(--panel); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--line); border-radius: 10px; padding: 16px;
+  display: grid; gap: 10px;
+}
+.tour-head { display: flex; align-items: center; gap: 12px; }
+.step { font-family: var(--font-data); font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.progress { flex: 1; display: flex; gap: 4px; }
+.progress i { flex: 1; height: 2px; background: var(--line); border-radius: 2px; transition: background .3s; }
+.progress i.on { background: var(--accent); }
+.tour h2 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 18px; text-wrap: balance; }
+.tour p { margin: 0; color: var(--ink-soft); line-height: 1.5; min-height: 4.5em; }
+.tour-nav { display: flex; justify-content: space-between; gap: 8px; }
+.tour-nav button {
+  font: 500 13px/1 var(--font-body); color: var(--ink); background: transparent;
+  border: 1px solid var(--line); border-radius: 7px; padding: 9px 14px; cursor: pointer;
+}
+.tour-nav button.primary { background: var(--ink); color: var(--cove); border-color: transparent; }
+.tour-nav button:disabled { opacity: .35; cursor: default; }
+.tour-nav button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 640px) { .label { display: none; } .tour p { min-height: 0; } }
+@media (prefers-reduced-motion: reduce) { .loader .fill, .fade { transition: none; } }
+</style>
+
+<div id="stage"></div>
+
+<div class="label">
+  <div class="brand">KREATIV<span>.</span></div>
+  <h1>Oskar Concept</h1>
+  <div class="dims"><span>Residential</span><span>Ulcinj, Montenegro</span><span>599 m²</span></div>
+</div>
+
+<div class="fade" id="fade"></div>
+
+<section class="tour" id="tour" hidden aria-live="polite">
+  <div class="tour-head">
+    <span class="step" id="step">01 / 07</span>
+    <div class="progress" id="progress"></div>
+  </div>
+  <h2 id="stop-title">Overview</h2>
+  <p id="stop-text"></p>
+  <div class="tour-nav">
+    <button id="prev" aria-label="Previous stop">←&nbsp;Back</button>
+    <button id="next" class="primary" aria-label="Next stop">Next&nbsp;→</button>
+  </div>
+</section>
+
+<script>/* start the model download now, alongside the 3D engine, not after it */
+window.__modelReq = fetch("oskar-16426d45f4.wasm");</script>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/meshopt_decoder.module.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/utils/BufferGeometryUtils.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/postprocessing/EffectComposer.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/postprocessing/RenderPass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/postprocessing/GTAOPass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/postprocessing/OutputPass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/postprocessing/ShaderPass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/postprocessing/Pass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/postprocessing/MaskPass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/shaders/CopyShader.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/shaders/GTAOShader.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/shaders/PoissonDenoiseShader.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/shaders/OutputShader.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/math/SimplexNoise.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/environments/RoomEnvironment.js">
+<div class="loader" id="loader">
+  <div class="box">
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <p id="status">Downloading model</p>
+  </div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const MODEL_URL = 'oskar-16426d45f4.wasm';   // gzip-packed GLB; the extension is only for hosting
+// the model file is in the website's coordinates; room lights below were measured in the SketchUp export's
+const SITE_OFFSET = new THREE.Vector3(-21.99, 0.51, 23.68);
+
+// Guided tour, taken from the website's Oskar Concept project file (model coordinates, metres)
+const TOUR = [
+  { title: 'Overview', text: 'A detached two-storey family house on a flat 982 m² plot in Ulcinj, Montenegro. A white cube with a double-height living space, flanked by two lower annexes in white facade brick.',
+    pos: [-38, 24, 42], target: [0, 2, 0] },
+  { title: 'Garden facade', text: 'Large glass walls open the living area to the south-west: a 119 m² timber-decked terrace and a 402 m² garden.',
+    pos: [-26, 4, -2], target: [0, 3, 0] },
+  { title: 'Arrival', text: 'Pedestrian and car access from the south-east. Two parking spaces on the plot and a 35 m² garage for two more cars in the brick annex.',
+    pos: [-16, 5, 24], target: [0, 2.2, 13] },
+  { title: 'Living, dining & kitchen', interior: true, text: 'One 71 m² open space for living, dining and cooking around a central kitchen island, with oak parquet floors, granite-tiled kitchen walls and full-height glazing towards the terrace.',
+    pos: [-2.6, 2.1, -5.2], target: [-0.8, 1.7, 5], fov: 60 },
+  { title: 'Upper floor', interior: true, text: 'The inner stair rises to a gallery over the double-height living space and the family’s additional bedrooms. The rest of the floor is a self-contained two-bedroom apartment with its own entrance.',
+    pos: [0.5, 5.2, -5.6], target: [-3.6, 4.0, 0.0], fov: 62 },
+  { title: 'Wellness annex', text: 'The recreation block: a sauna, showers and a 22 m² rest area, linked to the house by terraces.',
+    pos: [-14, 4, -36], target: [0, 2.5, -15] },
+  { title: 'From above', text: 'A flat roof over 599 m² of gross floor area: 402 m² on the ground floor and 197 m² on the first floor.',
+    pos: [0, 75, 0.01], target: [0, 0, 0] },
+];
+const DEFAULT_FOV = 40;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- renderer ---------- */
+const stage = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.NeutralToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true;
+// PCF honours shadow.radius, so each frame already has a soft, blurred shadow edge
+renderer.shadowMap.type = THREE.PCFShadowMap;
+stage.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+// soft studio reflections: metal finishes (silver, iron, chrome, seamed metal) render black without something to reflect
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.08;
+const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.05, 2000);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+// wide limits: tour stops include a straight-down view and eye-level interiors
+controls.maxPolarAngle = Math.PI * 0.95;
+controls.minPolarAngle = 0;
+
+/* backdrop colour follows the page theme */
+function coveColor() {
+  return new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--cove').trim() || '#ecebe7');
+}
+const isDark = () => coveColor().getHSL({}).l < 0.4;
+
+/* ---------- studio rig: cove + three area lights, turns with the camera ---------- */
+const studio = new THREE.Group();
+scene.add(studio);
+const coveMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.95, metalness: 0, side: THREE.DoubleSide });
+
+function buildCove(R) {
+  // profile in (z, y): floor in front -> floor behind -> quarter-circle sweep -> tall back wall
+  const front = 7 * R, back = 1.8 * R, r = 1.6 * R, H = 6 * R, W = 14 * R;
+  const prof = [];
+  const steps = 40;
+  prof.push([front, 0]);
+  for (let i = 0; i <= 10; i++) prof.push([front - (front + back) * i / 10, 0]);
+  for (let i = 1; i <= steps; i++) {
+    const t = (i / steps) * Math.PI / 2;
+    prof.push([-back - r * Math.sin(t), r - r * Math.cos(t)]);
+  }
+  prof.push([-back - r, H]);
+  const xs = 40;
+  const pos = [], idx = [];
+  for (let p = 0; p < prof.length; p++)
+    for (let i = 0; i <= xs; i++) pos.push(-W / 2 + W * i / xs, prof[p][1], prof[p][0]);
+  for (let p = 0; p < prof.length - 1; p++)
+    for (let i = 0; i < xs; i++) {
+      const a = p * (xs + 1) + i, b = a + 1, c = a + xs + 1, d = c + 1;
+      idx.push(a, c, b, b, c, d);
+    }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setIndex(idx);
+  g.computeVertexNormals();
+  const m = new THREE.Mesh(g, coveMat);
+  m.receiveShadow = true;
+  return m;
+}
+
+const rig = { boxes: [] };
+function sph(dist, azDeg, elDeg, y0) {
+  const az = THREE.MathUtils.degToRad(azDeg), el = THREE.MathUtils.degToRad(elDeg);
+  return new THREE.Vector3(Math.sin(az) * Math.cos(el) * dist, y0 + Math.sin(el) * dist, Math.cos(az) * Math.cos(el) * dist);
+}
+
+/*
+  Real area-light shadows: each softbox is a rectangle. Every accumulation frame the light is
+  moved to a different point on that rectangle and the frames are averaged, so shadows get a true
+  penumbra — sharp where an object touches the surface, widening and blurring with distance —
+  exactly like a softbox in a photo studio.
+*/
+function makeSoftbox({ color, intensity, w, h, az, el, dist, mapSize, shadow = true }) {
+  const { aim, R } = rig;
+  const center = sph(dist, az, el, aim.y);
+  const dir = aim.clone().sub(center).normalize();
+  const right = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize();
+  const up = new THREE.Vector3().crossVectors(right, dir).normalize();
+  const angle = Math.atan((2.1 * R) / dist);
+  const light = new THREE.SpotLight(color, intensity, 0, angle, 0.65, 0);
+  light.castShadow = shadow;
+  light.shadow.mapSize.set(mapSize, mapSize);
+  // offset scaled to the size of one shadow-map texel, so walls never shade themselves in a jagged pattern
+  const texel = (2 * dist * Math.tan(angle)) / mapSize;
+  light.shadow.bias = -0.0005;
+  light.shadow.normalBias = texel * 1.5;
+  light.shadow.radius = 5;
+  light.shadow.camera.near = Math.max(0.1, dist - 2.5 * R);
+  light.shadow.camera.far = dist + 3 * R;
+  const target = new THREE.Object3D(); target.position.copy(aim);
+  light.target = target;
+  light.position.copy(center);
+  studio.add(light, target);
+  const box = { light, center, right, up, w, h };
+  rig.boxes.push(box);
+  return box;
+}
+
+function buildLights(R, centerY) {
+  rig.aim = new THREE.Vector3(0, centerY, 0);
+  rig.R = R;
+  const D = 3.2 * R;
+  // 1. KEY – large softbox, 45° to the camera's right and 45° up, in front of the model
+  rig.key = makeSoftbox({ color: 0xfff2e2, intensity: 1.5, w: 1.4 * R, h: 1.4 * R, az: 45, el: 45, dist: D, mapSize: 4096 });
+  // 2. FILL – wider softbox on the opposite side, 35 % of the key
+  rig.fill = makeSoftbox({ color: 0xeef3ff, intensity: 1.5 * 0.35, w: 2.4 * R, h: 1.6 * R, az: -60, el: 22, dist: D * 1.15, mapSize: 1024, shadow: false });   // too weak to show its own shadows
+  // 3. RIM – strip softbox behind and above, angled down toward the camera, for the edge light on rooflines
+  rig.rim = makeSoftbox({ color: 0xffffff, intensity: 1.2, w: 2.2 * R, h: 0.35 * R, az: 180, el: 38, dist: D, mapSize: 1024, shadow: false });   // edge light only
+  // light bouncing off the white paper cove
+  rig.bounce = new THREE.HemisphereLight(0xffffff, 0xd8d4cc, 0.04);
+  scene.add(rig.bounce);
+}
+
+// low-discrepancy points across each softbox so the average converges quickly
+function halton(i, b) { let f = 1, r = 0; while (i > 0) { f /= b; r += f * (i % b); i = Math.floor(i / b); } return r; }
+function placeSoftboxSample(n) {
+  rig.boxes.forEach((b, j) => {
+    const u = n === 0 ? 0.5 : halton(n + 17 * j, 2), v = n === 0 ? 0.5 : halton(n + 17 * j, 3);
+    b.light.position.copy(b.center)
+      // small spread: with only a few passes a full-size softbox would show stepped shadow copies
+      .addScaledVector(b.right, (u - 0.5) * b.w * 0.25)
+      .addScaledVector(b.up, (v - 0.5) * b.h * 0.25);
+  });
+}
+
+/* ---------- maquette finishes ---------- */
+const clay = {
+  card: new THREE.MeshStandardMaterial({ color: 0xf6f4ef, roughness: 0.82, metalness: 0, side: THREE.DoubleSide }),
+  grey: new THREE.MeshStandardMaterial({ color: 0xbdbab3, roughness: 0.7, metalness: 0 }),
+  balsa: new THREE.MeshStandardMaterial({ color: 0xd9bf94, roughness: 0.75, metalness: 0 }),
+  metal: new THREE.MeshStandardMaterial({ color: 0xd4d3cf, roughness: 0.38, metalness: 0.35 }),
+  acrylic: new THREE.MeshStandardMaterial({ color: 0xdfe9ec, roughness: 0.05, metalness: 0, transparent: true, opacity: 0.28, depthWrite: false }),
+};
+function clayFor(mat) {
+  const n = (mat.name || '').toLowerCase();
+  if (n.includes('glass') || n.includes('acrylic')) return clay.acrylic;
+  if (n.includes('walnut') || n.includes('wood')) return clay.balsa;
+  if (n.includes('chrome') || n.includes('silver') || n.includes('iron') || n.includes('seamed')) return clay.metal;
+  if (n.includes('black') || n.includes('gray') || n.includes('grey') || n === 'default material') return clay.grey;
+  return clay.card;
+}
+
+const meshes = [];
+let mode = 'clay';
+function setMode(m) {
+  mode = m;
+  for (const o of meshes) {
+    o.material = m === 'clay' ? o.userData.clay : o.userData.orig;
+    o.castShadow = !o.userData.noShadow && !o.material.transparent;
+  }
+}
+
+/* ---------- clear windows + warm interior lights ---------- */
+const WARM = new THREE.Color(0xffb46b);   // ~2900 K tungsten
+function addInterior(model) {
+  const glass = meshes.filter(o => (o.material.name || '').toLowerCase().includes('glass'));
+  if (!glass.length) return;
+  /*
+    One omni light per glazed room, placed at the centre of each room's volume.
+    Positions come from the Oskar floor plans (ground floor ±0.00, first floor +3.06) fitted to the
+    model's own walls; coordinates are in the model's file units (metres).
+    [name, x, y, z, intensity (cd), reach (m), casts shadow]
+  */
+  const ROOMS = [
+    // ground floor
+    ['A1 Living (double height)', 20.20, 3.20, -25.50, 30, 10, true],
+    ['A1 Living / kitchen',       20.50, 1.65, -17.90, 20,  8, true],
+    ['A10 Rest area',             25.60, 1.65, -32.10, 16,  7, true],
+    ['A4 Master bedroom',         26.55, 1.65, -27.03,  9,  4.5, false],
+    ['A5 Master bathroom',        27.39, 1.65, -23.88,  4,  2.6, false],
+    ['A7 Bathroom',               26.60, 1.65, -22.38,  4,  2.6, false],
+    ['A6 Bedroom',                26.57, 1.65, -19.71,  9,  4.5, false],
+    ['A8 Technical room',         26.47, 1.65, -16.46,  5,  3.2, false],
+    ['A9 Food pantry',            26.60, 1.65, -14.48,  4,  2.6, false],
+    ['A2 Hallway (west)',         23.90, 1.65, -25.50,  5,  3.5, false],
+    ['A2 Hallway (east)',         23.67, 1.65, -19.66,  5,  3.5, false],
+    ['A11 Corridor',              23.20, 1.65, -38.10,  5,  3.8, false],
+    ['A12/A13 Shower & toilet',   27.50, 1.65, -36.96,  4,  2.6, false],
+    ['A15 Tool shed',             27.60, 1.65, -39.60,  5,  3.2, false],
+    ['A16 Garage',                23.76, 1.65,  -7.48, 10,  5.5, false],
+    ['A17 Tool shed',             27.70, 1.65,  -7.50,  4,  3.0, false],
+    // first floor
+    ['B1 Living / kitchen',       20.54, 5.00, -17.83, 18,  8, true],
+    ['B10 Hallway & stairs',      23.35, 5.00, -25.53,  6,  4.5, false],
+    ['B2 Hallway',                23.67, 5.00, -18.98,  5,  3.5, false],
+    ['B11 Bedroom',               26.50, 5.00, -27.43,  9,  4.5, false],
+    ['B13 Toilet',                28.17, 5.00, -25.55,  3,  2.2, false],
+    ['B12 Bedroom',               26.51, 5.00, -23.61,  9,  4.5, false],
+    ['B5 Bedroom',                26.50, 5.00, -19.68,  9,  4.5, false],
+    ['B7 Toilet',                 28.17, 5.00, -17.77,  3,  2.2, false],
+    ['B6 Bedroom',                26.50, 5.00, -15.86,  9,  4.5, false],
+  ];
+  for (const [name, x, y, z, cd, reach, shadow] of ROOMS) {
+    const lamp = new THREE.PointLight(WARM, cd, reach, 2);
+    lamp.name = name;
+    lamp.position.set(x, y, z).add(SITE_OFFSET);
+    if (shadow) {
+      lamp.castShadow = true;
+      lamp.shadow.mapSize.set(1024, 1024);
+      lamp.shadow.radius = 6;
+      lamp.shadow.bias = -0.002;
+      lamp.shadow.camera.near = 0.05;
+      lamp.shadow.autoUpdate = false;    // lamps never move, so their shadows are drawn once
+      lamp.shadow.needsUpdate = true;
+    }
+    model.add(lamp);
+  }
+
+  // clear glazing: the warm, lit interior shows through like the reference photo
+  const clear = new THREE.MeshPhysicalMaterial({
+    name: 'Lightly frosted glass', color: 0xf4f2ee, roughness: 0.55, metalness: 0,
+    transparent: true, opacity: 0.3, depthWrite: false, side: THREE.DoubleSide,
+    envMapIntensity: 0.6,
+  });
+  glass.forEach(o => { o.userData.orig = clear; o.userData.clay = clear; o.userData.noShadow = true; });
+}
+
+/* ---------- loading ---------- */
+const fill = document.getElementById('fill'), statusEl = document.getElementById('status');
+async function fetchModel() {
+  const res = await (window.__modelReq || fetch(MODEL_URL));
+  if (!res.ok) throw new Error('The model file could not be downloaded (' + res.status + ').');
+  const total = +res.headers.get('content-length') || 4023546;
+  const reader = res.body.getReader();
+  const chunks = []; let got = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value); got += value.length;
+    fill.style.width = Math.min(100, got / total * 100) + '%';
+    statusEl.textContent = `Downloading model · ${(got / 1048576).toFixed(1)} MB`;
+  }
+  let blob = new Blob(chunks);
+  const head = new Uint8Array(await blob.slice(0, 4).arrayBuffer());
+  if (head[0] === 0x1f && head[1] === 0x8b) {        // gzip – unpack in the browser
+    statusEl.textContent = 'Unpacking model';
+    blob = await new Response(blob.stream().pipeThrough(new DecompressionStream('gzip'))).blob();
+  }
+  return blob.arrayBuffer();
+}
+
+/* ---------- guided tour: glide between outside views, fade in and out of interiors ---------- */
+let current = 0, tween = null, busy = false;
+const fadeEl = document.getElementById('fade');
+const progressEl = document.getElementById('progress');
+TOUR.forEach(() => progressEl.appendChild(document.createElement('i')));
+function showStopText(i) {
+  document.getElementById('step').textContent = `${String(i + 1).padStart(2, '0')} / ${String(TOUR.length).padStart(2, '0')}`;
+  document.getElementById('stop-title').textContent = TOUR[i].title;
+  document.getElementById('stop-text').textContent = TOUR[i].text;
+  [...progressEl.children].forEach((el, j) => el.classList.toggle('on', j <= i));
+  document.getElementById('prev').disabled = i === 0;
+  document.getElementById('next').textContent = i === TOUR.length - 1 ? 'Start again' : 'Next →';
+}
+function placeCamera(stop) {
+  camera.position.set(...stop.pos);
+  controls.target.set(...stop.target);
+  camera.fov = stop.fov || DEFAULT_FOV; camera.updateProjectionMatrix();
+  controls.update();
+}
+const wait = ms => new Promise(r => setTimeout(r, ms));
+async function goStop(i, instant) {
+  if (busy) return;
+  const from = TOUR[current], to = TOUR[i];
+  current = i; showStopText(i);
+  if (instant) { placeCamera(to); return; }
+  if (from.interior || to.interior) {
+    // never glide through walls: fade to the backdrop, cut, fade back
+    busy = true;
+    fadeEl.classList.add('on'); await wait(reduceMotion ? 0 : 380);
+    tween = null; placeCamera(to);
+    await wait(120); fadeEl.classList.remove('on'); busy = false;
+    return;
+  }
+  tween = {
+    p0: camera.position.clone(), p1: new THREE.Vector3(...to.pos),
+    t0: controls.target.clone(), t1: new THREE.Vector3(...to.target),
+    f0: camera.fov, f1: to.fov || DEFAULT_FOV, start: performance.now(), dur: reduceMotion ? 1 : 1800,
+  };
+}
+const next = () => goStop((current + 1) % TOUR.length);
+const prev = () => current > 0 && goStop(current - 1);
+document.getElementById('next').addEventListener('click', next);
+document.getElementById('prev').addEventListener('click', prev);
+addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') next();
+  else if (e.key === 'ArrowLeft') prev();
+});
+
+
+/* ---------- maquette trees: the wire trees become plate trees and stick trees, alternating, in the figures' white ---------- */
+const ACRYLIC_TREE = 'Z2xURgIAAABYLAAA/AUAAEpTT057ImFzc2V0Ijp7InZlcnNpb24iOiIyLjAiLCJnZW5lcmF0b3IiOiJLcmVhdGl2IG1hcXVldHRlIHRyZWVzIn0sInNjZW5lIjowLCJzY2VuZXMiOlt7Im5vZGVzIjpbMF19XSwibm9kZXMiOlt7Im5hbWUiOiJBY3J5bGljIHRyZWUiLCJtZXNoIjowfV0sIm1lc2hlcyI6W3sibmFtZSI6IkFjcnlsaWMgdHJlZSIsInByaW1pdGl2ZXMiOlt7ImF0dHJpYnV0ZXMiOnsiUE9TSVRJT04iOjAsIk5PUk1BTCI6MX0sIm1hdGVyaWFsIjowfSx7ImF0dHJpYnV0ZXMiOnsiUE9TSVRJT04iOjIsIk5PUk1BTCI6M30sIm1hdGVyaWFsIjoxfV19XSwibWF0ZXJpYWxzIjpbeyJuYW1lIjoiV29vZGVuIGRvd2VsIiwicGJyTWV0YWxsaWNSb3VnaG5lc3MiOnsiYmFzZUNvbG9yRmFjdG9yIjpbMC41Nzc1ODA0NDA0Mjk2NTA2LDAuMzgxMzI2MDExNDMyNTMwMTQsMC4xOTEyMDE2ODI3NDA3OTEzOCwxXSwibWV0YWxsaWNGYWN0b3IiOjAsInJvdWdobmVzc0ZhY3RvciI6MC44fSwiZG91YmxlU2lkZWQiOnRydWV9LHsibmFtZSI6IkZyb3N0ZWQgYWNyeWxpYyIsInBick1ldGFsbGljUm91Z2huZXNzIjp7ImJhc2VDb2xvckZhY3RvciI6WzAuOTA0NjYxMTc0MzkxMTQ5NiwwLjg4NzkyMzExNzg4MTk2NjMsMC44NTQ5OTI2MDgxMjQyMzM4LDAuNjJdLCJtZXRhbGxpY0ZhY3RvciI6MCwicm91Z2huZXNzRmFjdG9yIjowLjU1fSwiZG91YmxlU2lkZWQiOnRydWUsImFscGhhTW9kZSI6IkJMRU5EIn1dLCJhY2Nlc3NvcnMiOlt7ImJ1ZmZlclZpZXciOjAsImNvbXBvbmVudFR5cGUiOjUxMjYsImNvdW50Ijo0OCwidHlwZSI6IlZFQzMiLCJtaW4iOlstMC4wNTk5OTk5OTg2NTg4OTU0OSwwLjAsLTAuMDU5OTk5OTk4NjU4ODk1NDldLCJtYXgiOlswLjA1OTk5OTk5ODY1ODg5NTQ5LDYuNTk5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';
+const WIRE = /wire[\s_]*tree/i;
+const STICK_TREES = 'Z2xURgIAAABgagAARAcAAEpTT057ImFzc2V0Ijp7InZlcnNpb24iOiIyLjAiLCJnZW5lcmF0b3IiOiJLcmVhdGl2IHN0aWNrIHRyZWVzIn0sInNjZW5lIjowLCJzY2VuZXMiOlt7Im5vZGVzIjpbMCwxLDJdfV0sIm5vZGVzIjpbeyJuYW1lIjoiU3RpY2sgdHJlZSAxIiwibWVzaCI6MH0seyJuYW1lIjoiU3RpY2sgdHJlZSAyIiwibWVzaCI6MX0seyJuYW1lIjoiU3RpY2sgdHJlZSAzIiwibWVzaCI6Mn1dLCJtZXNoZXMiOlt7Im5hbWUiOiJTdGljayB0cmVlIDEiLCJwcmltaXRpdmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlBPU0lUSU9OIjowLCJOT1JNQUwiOjF9LCJtYXRlcmlhbCI6MH1dfSx7Im5hbWUiOiJTdGljayB0cmVlIDIiLCJwcmltaXRpdmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlBPU0lUSU9OIjoyLCJOT1JNQUwiOjN9LCJtYXRlcmlhbCI6MH1dfSx7Im5hbWUiOiJTdGljayB0cmVlIDMiLCJwcmltaXRpdmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlBPU0lUSU9OIjo0LCJOT1JNQUwiOjV9LCJtYXRlcmlhbCI6MH1dfV0sIm1hdGVyaWFscyI6W3sibmFtZSI6Ik1vZGVsIHdoaXRlIiwicGJyTWV0YWxsaWNSb3VnaG5lc3MiOnsiYmFzZUNvbG9yRmFjdG9yIjpbMC45MDQ2NjExNzQzOTExNDk2LDAuODg3OTIzMTE3ODgxOTY2MywwLjg1NDk5MjYwODEyNDIzMzgsMV0sIm1ldGFsbGljRmFjdG9yIjowLCJyb3VnaG5lc3NGYWN0b3IiOjAuODV9fV0sImFjY2Vzc29ycyI6W3siYnVmZmVyVmlldyI6MCwiY29tcG9uZW50VHlwZSI6NTEyNiwiY291bnQiOjMzNiwidHlwZSI6IlZFQzMiLCJtaW4iOlstMC44MjIwMjI3MzYwNzI1NDAzLDAuMCwtMC40MDg0NzQ3NzMxNjg1NjM4NF0sIm1heCI6WzAuNTg0NDQ1Mjk3NzE4MDQ4MSw2LjQwMDAwMDA5NTM2NzQzMiwwLjU2NjA1NDg4MDYxOTA0OTFdfSx7ImJ1ZmZlclZpZXciOjEsImNvbXBvbmVudFR5cGUiOjUxMjYsImNvdW50IjozMzYsInR5cGUiOiJWRUMzIn0seyJidWZmZXJWaWV3IjoyLCJjb21wb25lbnRUeXBlIjo1MTI2LCJjb3VudCI6MjQwLCJ0eXBlIjoiVkVDMyIsIm1pbiI6Wy0wLjY4NjYyNzk4NDA0NjkzNiwwLjAsLTAuNDg3OTA0NjY3ODU0MzA5MV0sIm1heCI6WzAuMjUwNjQxNjQ0MDAxMDA3MSw1LjE5OTk5OTgwOTI2NTEzNywwLjMzNjg5NTYxNDg2MjQ0Ml19LHsiYnVmZmVyVmlldyI6MywiY29tcG9uZW50VHlwZSI6NTEyNiwiY291bnQiOjI0MCwidHlwZSI6IlZFQzMifSx7ImJ1ZmZlclZpZXciOjQsImNvbXBvbmVudFR5cGUiOjUxMjYsImNvdW50Ijo0ODAsInR5cGUiOiJWRUMzIiwibWluIjpbLTAuNTkzMjkwNTY3Mzk4MDcxMywwLjAsLTAuNjI4MTg3NTk2Nzk3OTQzMV0sIm1heCI6WzAuOTkzOTcxNzA1NDM2NzA2NSw3LjQxNDE1OTI5Nzk0MzExNSwwLjgxNzkyMjQxMzM0OTE1MTZdfSx7ImJ1ZmZlclZpZXciOjUsImNvbXBvbmVudFR5cGUiOjUxMjYsImNvdW50Ijo0ODAsInR5cGUiOiJWRUMzIn1dLCJidWZmZXJWaWV3cyI6W3siYnVmZmVyIjowLCJieXRlT2Zmc2V0IjowLCJieXRlTGVuZ3RoIjo0MDMyLCJ0YXJnZXQiOjM0OTYyfSx7ImJ1ZmZlciI6MCwiYnl0ZU9mZnNldCI6NDAzMiwiYnl0ZUxlbmd0aCI6NDAzMiwidGFyZ2V0IjozNDk2Mn0seyJidWZmZXIiOjAsImJ5dGVPZmZzZXQiOjgwNjQsImJ5dGVMZW5ndGgiOjI4ODAsInRhcmdldCI6MzQ5NjJ9LHsiYnVmZmVyIjowLCJieXRlT2Zmc2V0IjoxMDk0NCwiYnl0ZUxlbmd0aCI6Mjg4MCwidGFyZ2V0IjozNDk2Mn0seyJidWZmZXIiOjAsImJ5dGVPZmZzZXQiOjEzODI0LCJieXRlTGVuZ3RoIjo1NzYwLCJ0YXJnZXQiOjM0OTYyfSx7ImJ1ZmZlciI6MCwiYnl0ZU9m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+4jSvSid+D5VcrdABSiyvUr6mD5HaahAb/U5vugxjT73pahAFQIyvl5M6j6b1LdA4SrGvUr6mD5HaahAb/U5vl5M6j6b1LdA4SrGvXJ28z5npbdA+4jSvegxjT73pahAFQIyviqJjD7PiahAjEcYviDJ6T60vrdAKSWevegxjT73pahAFQIyviDJ6T60vrdAKSWevV5M6j6b1LdA4SrGvSqJjD7PiahAjEcYvkPplz64O6hAMlQQvhei8j74gbdAD8eRvSqJjD7PiahAjEcYvhei8j74gbdAD8eRvSDJ6T60vrdAKSWevUPplz64O6hAMlQQvseZnz6dJ6hA0SQlviid+D5VcrdABSiyvUPplz64O6hAMlQQviid+D5VcrdABSiyvRei8j74gbdAD8eRvceZnz6dJ6hA0SQlvugxjT73pahAFQIyvkr6mD5HaahAb/U5viid+D5VcrdABSiyvXJ28z5npbdA+4jSvV5M6j6b1LdA4SrGvceZnz6dJ6hA0SQlviqJjD7PiahAjEcYvugxjT73pahAFQIyviid+D5VcrdABSiyvV5M6j6b1LdA4SrGvSDJ6T60vrdAKSWevceZnz6dJ6hA0SQlvkPplz64O6hAMlQQviqJjD7PiahAjEcYviid+D5VcrdABSiyvSDJ6T60vrdAKSWevRei8j74gbdAD8eRvbMbTz8iD586EXkWv7MbTz8iD586EXkWv7MbTz8iD586EXkWv7IbTz8eD586EXkWv7IbTz8eD586EXkWv7IbTz8eD586EXkWv3I3nr4lD586ZXhzv3I3nr4lD586ZXhzv3I3nr4lD586ZXhzv3M3nr4gD586ZHhzv3M3nr4gD586ZHhzv3M3nr4gD586ZHhzv/T/f78jD586AAAAAPT/f78jD586AAAAAPT/f78jD586AAAAAPT/f78jD586AAAAAPT/f78jD586AAAAAPT/f78jD586AAAAAHI3nr4hD586ZXhzP3I3nr4hD586ZXhzP3I3nr4hD586ZXhzP3E3nr4jD586ZHhzP3E3nr4jD586ZHhzP3E3nr4jD586ZHhzP7MbTz8fD586EXkWP7MbTz8fD586EXkWP7MbTz8fD586EXkWP7MbTz8hD586EXkWP7MbTz8hD586EXkWP7MbTz8hD586EXkWPwAAAAAAAIC/AAAAAAAAAAAAAIC/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';   // three white stick-tree variants
+async function swapTrees(model) {
+  const spots = [];
+  model.traverse(o => {
+    // the loader turns spaces into underscores: 'Wire Tree 1' arrives as 'Wire_Tree_1'
+    if (WIRE.test(o.name) && !WIRE.test(o.parent?.name || '')) spots.push(o);
+  });
+  if (!spots.length) return;
+  const buf = Uint8Array.from(atob(ACRYLIC_TREE), c => c.charCodeAt(0)).buffer;
+  const tree = (await new GLTFLoader().parseAsync(buf, '')).scene;
+  const treeH = new THREE.Box3().setFromObject(tree).getSize(new THREE.Vector3()).y;
+  const sBuf = Uint8Array.from(atob(STICK_TREES), c => c.charCodeAt(0)).buffer;
+  const sticks = [...(await new GLTFLoader().parseAsync(sBuf, '')).scene.children];
+  // the model's own finishes: wood for the dowel, and the car and people's white (Material4)
+  // for the acrylic plates and the stick trees, so every tree matches the figures
+  let wood = null, figure = null;
+  model.traverse(o => {
+    if (!o.isMesh) return;
+    if (!wood && o.material?.name === 'Material' && o.material.map) wood = o.material;
+    if (!figure && o.material?.name === 'Material4') figure = o.material;
+  });
+  // the trees carry no texture mapping of their own: give them one so textured finishes sit right
+  function addUV(g, along) {
+    if (g.attributes.uv) return;
+    const p = g.attributes.position, uv = new Float32Array(p.count * 2);
+    for (let k = 0; k < p.count; k++) {
+      if (along) { uv[2 * k] = p.getY(k) * 0.6; uv[2 * k + 1] = Math.atan2(p.getZ(k), p.getX(k)) / (2 * Math.PI) + 0.5; }
+      else { uv[2 * k] = (p.getX(k) + p.getZ(k)) * 0.5; uv[2 * k + 1] = p.getY(k) * 0.5; }
+    }
+    g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  }
+  tree.traverse(o => {
+    if (!o.isMesh) return;
+    if (/dowel/i.test(o.material.name) && wood) { addUV(o.geometry, true); o.material = wood; }
+    else if (/acrylic/i.test(o.material.name) && figure) { addUV(o.geometry, false); o.material = figure; }
+  });
+  if (figure) sticks.forEach(st => st.traverse(o => { if (o.isMesh) { addUV(o.geometry, false); o.material = figure; } }));
+  model.updateMatrixWorld(true);
+  spots.forEach((spot, i) => {
+    const box = new THREE.Box3().setFromObject(spot), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+    spot.visible = false;
+    // alternate: frosted acrylic tree, then a white stick tree (cycling its three variants)
+    const src = i % 2 === 0 ? tree : sticks[(i >> 1) % sticks.length];
+    const srcH = src === tree ? treeH : new THREE.Box3().setFromObject(src).getSize(new THREE.Vector3()).y;
+    const t = src.clone(true);
+    t.position.set(0, 0, 0);
+    t.scale.setScalar(size.y / srcH);
+    t.position.set(c.x, box.min.y, c.z);
+    t.rotation.y = i * 2.399;                       // each tree turned differently
+    scene.add(t);
+    t.traverse(o => {
+      if (!o.isMesh) return;
+      o.userData.orig = o.material; o.userData.clay = clayFor(o.material);
+      o.receiveShadow = true; meshes.push(o);
+    });
+  });
+  for (let k = meshes.length - 1; k >= 0; k--) {     // hidden wire trees no longer take part
+    let p = meshes[k], hidden = false;
+    for (; p; p = p.parent) if (p.visible === false) { hidden = true; break; }
+    if (hidden) meshes.splice(k, 1);
+  }
+}
+async function init() {
+  try {
+    const buf = await fetchModel();
+    statusEl.textContent = 'Preparing maquette';
+    const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(buf, '');
+    const model = gltf.scene;
+
+    // the file is already centred on the building with the ground at y = 0, matching the tour coordinates
+    const box = new THREE.Box3().setFromObject(model);
+    const size = box.getSize(new THREE.Vector3());
+    scene.add(model);
+    model.traverse(o => {
+      if (!o.isMesh) return;
+      o.material.side = THREE.DoubleSide;
+      o.userData.orig = o.material;
+      o.userData.clay = clayFor(o.material);
+      o.receiveShadow = true;
+      meshes.push(o);
+    });
+    addInterior(model);
+    await swapTrees(model);
+    setMode('tex');
+
+    const R = size.length() / 2;
+    const centerY = size.y / 2;
+    const cove = buildCove(R);
+    studio.add(cove);
+    studio.position.y = box.min.y - 0.01;   // the paper backdrop sits just under the site plinth
+    buildLights(R, centerY);
+    gtao.updateGtaoMaterial({ radius: R * 0.03, distanceExponent: 1.5, thickness: R * 0.01, scale: 1.2, samples: 16 });
+    gtao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 4, rings: 2, samples: 16 });
+
+    scene.fog = new THREE.Fog(coveColor(), R * 6, R * 16);
+    applyTheme();
+
+    controls.minDistance = 0.1; controls.maxDistance = R * 4;
+    goStop(0, true);
+    document.getElementById('loader').hidden = true;
+    document.getElementById('tour').hidden = false;
+  } catch (e) {
+    statusEl.textContent = e.message || 'The model could not be opened.';
+    fill.style.background = 'var(--ink-soft)';
+    console.error(e);
+  }
+}
+
+function applyTheme() {
+  const c = coveColor();
+  scene.background = c;
+  if (scene.fog) scene.fog.color.copy(c);
+  coveMat.color.set(0xb9b6b0);   // pale grey paper; the dim light makes it read mid-grey like the reference
+  try { sampleN = 0; } catch (e) { /* render loop not started yet */ }
+}
+applyTheme();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+
+/* ---------- render pipeline: ambient occlusion + progressive accumulation ---------- */
+const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: 4 }));
+composer.renderToScreen = false;
+composer.addPass(new RenderPass(scene, camera));
+const gtao = new GTAOPass(scene, camera, innerWidth, innerHeight);
+if (gtao.normalMaterial) gtao.normalMaterial.side = THREE.DoubleSide;
+gtao.blendIntensity = 0.85;
+composer.addPass(gtao);
+
+/*
+  Rounded edges, like the softened corners of a cut-card maquette. The model's corners are
+  razor sharp, so this pass bends the shading near every edge: it averages the surface normals
+  within a few centimetres (in screen space, depth-aware) and re-lights that band with the key
+  light, so corners catch a thin highlight on the lit side and roll off into shade on the other.
+*/
+const BEVEL_RADIUS = 0.14;   // metres
+const normalRT = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, depthTexture: new THREE.DepthTexture() });
+const normalMat = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide });
+// a ShaderMaterial instance is used as-is (a plain object would have its uniforms cloned, breaking the render-target links)
+const bevel = new ShaderPass(new THREE.ShaderMaterial({
+  uniforms: {
+    tDiffuse: { value: null }, tNormal: { value: normalRT.texture }, tDepth: { value: normalRT.depthTexture },
+    uNear: { value: 0.05 }, uFar: { value: 2000 }, uPxPerM: { value: 800 }, uRadius: { value: BEVEL_RADIUS },
+    uTexel: { value: new THREE.Vector2(1, 1) }, uKey: { value: new THREE.Vector3(0, 1, 0) }, uStrength: { value: 0.9 },
+  },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+  fragmentShader: `
+    #include <packing>
+    uniform sampler2D tDiffuse, tNormal, tDepth;
+    uniform float uNear, uFar, uPxPerM, uRadius, uStrength;
+    uniform vec2 uTexel; uniform vec3 uKey;
+    varying vec2 vUv;
+    float viewZ(vec2 uv){ return -perspectiveDepthToViewZ(texture2D(tDepth, uv).x, uNear, uFar); }
+    vec3 nrm(vec2 uv){ return normalize(texture2D(tNormal, uv).xyz * 2.0 - 1.0); }
+    void main(){
+      vec4 col = texture2D(tDiffuse, vUv);
+      float z = viewZ(vUv);
+      if (z > uFar * 0.9) { gl_FragColor = col; return; }
+      vec3 n = nrm(vUv);
+      float rpx = clamp(uRadius * uPxPerM / z, 0.0, 16.0);
+      if (rpx < 1.0) { gl_FragColor = col; return; }
+      vec3 sum = n; float w = 1.0;
+      for (int i = 0; i < 16; i++) {
+        float a = float(i) * 2.39996, r = sqrt((float(i) + 0.5) / 16.0) * rpx;
+        vec2 uv = vUv + vec2(cos(a), sin(a)) * r * uTexel;
+        float zs = viewZ(uv);
+        if (abs(zs - z) < uRadius * 2.5) { sum += nrm(uv); w += 1.0; }
+      }
+      vec3 nb = normalize(sum / w);
+      float edge = 1.0 - dot(nb, n);                 // 0 on flat faces, grows towards a corner
+      if (edge < 0.001) { gl_FragColor = col; return; }
+      float lb = 0.35 + 0.65 * max(dot(nb, uKey), 0.0);
+      float ln = 0.35 + 0.65 * max(dot(n, uKey), 0.0);
+      float k = mix(1.0, clamp(lb / ln, 0.55, 1.8), uStrength);
+      gl_FragColor = vec4(col.rgb * k, col.a);
+    }`,
+  depthTest: false, depthWrite: false,
+}));
+// rounded-edge effect switched off: corners stay sharp
+const output = new OutputPass();
+output.renderToScreen = true;
+
+const accum = [0, 1].map(() => new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, depthBuffer: false }));
+const blendMat = new THREE.ShaderMaterial({
+  uniforms: { tNew: { value: null }, tOld: { value: null }, w: { value: 1 } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+  fragmentShader: 'uniform sampler2D tNew, tOld; uniform float w; varying vec2 vUv; void main(){ gl_FragColor = mix(texture2D(tOld, vUv), texture2D(tNew, vUv), w); }',
+  depthTest: false, depthWrite: false,
+});
+const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), blendMat);
+const quadScene = new THREE.Scene(); quadScene.add(quad);
+const quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+// a few passes only smooth the already-soft shadow and the edges
+const MAX_SAMPLES = 12;
+let sampleN = 0, cur = 0;
+const lastCam = new THREE.Matrix4();
+
+const keyView = new THREE.Vector3();
+function renderNormals() {
+  const glassHidden = [];
+  meshes.forEach(o => { if (o.material.transparent && o.visible) { o.visible = false; glassHidden.push(o); } });
+  const bg = scene.background, fog = scene.fog;
+  scene.background = null; scene.fog = null; scene.overrideMaterial = normalMat;
+  const prevClear = renderer.getClearColor(new THREE.Color()), prevAlpha = renderer.getClearAlpha();
+  renderer.setRenderTarget(normalRT); renderer.setClearColor(0x8080ff, 1); renderer.clear();
+  renderer.render(scene, camera);
+  renderer.setRenderTarget(null); renderer.setClearColor(prevClear, prevAlpha);
+  scene.overrideMaterial = null; scene.background = bg; scene.fog = fog;
+  glassHidden.forEach(o => (o.visible = true));
+  const u = bevel.uniforms;
+  u.uNear.value = camera.near; u.uFar.value = camera.far;
+  u.uPxPerM.value = normalRT.height / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
+  // key light direction in view space (the normal buffer is view-space)
+  if (rig.key) {
+    rig.key.light.getWorldPosition(keyView);
+    keyView.sub(rig.key.light.target.getWorldPosition(new THREE.Vector3())).normalize().transformDirection(camera.matrixWorldInverse);
+    u.uKey.value.copy(keyView);
+  }
+}
+
+function sizeAll() {
+  const w = innerWidth, h = innerHeight, pr = Math.min(devicePixelRatio, 1.5);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+  composer.setPixelRatio(pr); composer.setSize(w, h);
+  accum.forEach(t => t.setSize(Math.floor(w * pr), Math.floor(h * pr)));
+  normalRT.setSize(Math.floor(w * pr), Math.floor(h * pr));
+  bevel.uniforms.uTexel.value.set(1 / Math.floor(w * pr), 1 / Math.floor(h * pr));
+  sampleN = 0;
+}
+sizeAll();
+addEventListener('resize', sizeAll);
+
+const tmp = new THREE.Vector3();
+function frame(now) {
+  requestAnimationFrame(frame);
+  if (tween) {
+    const k = Math.min(1, (now - tween.start) / tween.dur);
+    const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    camera.position.lerpVectors(tween.p0, tween.p1, e);
+    controls.target.lerpVectors(tween.t0, tween.t1, e);
+    camera.fov = THREE.MathUtils.lerp(tween.f0, tween.f1, e); camera.updateProjectionMatrix();
+    if (k >= 1) tween = null;
+  }
+  controls.update();
+  // the photo studio turns with the camera: backdrop always behind, key always front-right, rim always behind
+  tmp.copy(camera.position).sub(controls.target);
+  studio.rotation.y = Math.atan2(tmp.x, tmp.z);
+  camera.updateMatrixWorld();
+
+  if (!lastCam.equals(camera.matrixWorld)) { lastCam.copy(camera.matrixWorld); sampleN = 0; }
+  if (!rig.boxes.length || sampleN >= MAX_SAMPLES) return;   // converged: the canvas keeps the finished frame
+
+  // move every softbox to its next sample point and nudge the lens by a sub-pixel for anti-aliasing
+  placeSoftboxSample(sampleN);
+  const W = accum[0].width, H = accum[0].height;
+  if (sampleN > 0) camera.setViewOffset(W, H, halton(sampleN, 2) - 0.5, halton(sampleN, 3) - 0.5, W, H);
+  composer.render();
+  camera.clearViewOffset();
+
+  const src = accum[cur], dst = accum[1 - cur];
+  blendMat.uniforms.tNew.value = composer.readBuffer.texture;
+  blendMat.uniforms.tOld.value = src.texture;
+  blendMat.uniforms.w.value = 1 / (sampleN + 1);
+  renderer.setRenderTarget(dst); renderer.render(quadScene, quadCam); renderer.setRenderTarget(null);
+  cur = 1 - cur; sampleN++;
+  output.render(renderer, null, { texture: dst.texture });
+}
+requestAnimationFrame(frame);
+init();
+</script>
+
+</body></html>

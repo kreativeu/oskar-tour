@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Oskar Concept Tour</title>
+<title>Holiday House O.H. · KREATIV</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,6 +50,7 @@ body {
 }
 .brand { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.22em; font-size: 12px; }
 .brand span { color: var(--accent); }
+.brand .flip { display: inline-block; font-style: normal; transform: rotate(180deg); }
 h1 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.2; text-wrap: balance; }
 .dims { font-family: var(--font-data); font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; display: flex; flex-wrap: wrap; gap: 4px 14px; }
 .dims b { color: var(--ink); font-weight: 500; }
@@ -109,6 +110,29 @@ input[type="range"] { width: 110px; accent-color: var(--accent); }
 .explore:hover { border-color: var(--ink-soft); }
 .explore[aria-pressed="true"] { background: var(--ink); color: var(--cove); border-color: transparent; }
 .explore:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.plan {
+  position: fixed; z-index: 2;
+  right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  width: min(320px, calc(100vw - 32px));
+  background: var(--panel); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px 12px; display: grid; gap: 6px;
+}
+.plan[hidden] { display: none; }
+.plan-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.plan-floor { font-family: var(--font-data); font-size: 12px; color: var(--ink); }
+.plan-note { font-family: var(--font-data); font-size: 11px; color: var(--ink-soft); }
+.plan-map { position: relative; aspect-ratio: 985 / 343; }
+.plan-map img, .plan-map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plan-map img { filter: var(--plan-ink, none); }
+.plan-map img.off { display: none; }
+.plan-cursor .cone { fill: var(--accent); opacity: .28; }
+.plan-cursor .dot { fill: var(--accent); stroke: var(--cove); stroke-width: 3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --plan-ink: invert(.9); } }
+:root[data-theme="dark"] { --plan-ink: invert(.9); }
+@media (max-width: 640px) {
+  .plan { top: calc(env(safe-area-inset-top, 0px) + 16px); bottom: auto; left: max(16px, env(safe-area-inset-left, 0px)); right: auto; width: min(210px, calc(100vw - 190px)); padding: 8px; }
+  .plan-note { display: none; }
+}
 .fade { position: fixed; inset: 0; background: var(--cove); opacity: 0; pointer-events: none; transition: opacity .35s ease; }
 .fade.on { opacity: 1; }
 .tour {
@@ -142,8 +166,8 @@ input[type="range"] { width: 110px; accent-color: var(--accent); }
 <div id="stage"></div>
 
 <div class="label">
-  <div class="brand">KREATIV<span>.</span></div>
-  <h1>Oskar Concept</h1>
+  <div class="brand" aria-label="KREATIV">KRE<i class="flip" aria-hidden="true">A</i>TIV<span>.</span></div>
+  <h1>Holiday House O.H.</h1>
   <div class="dims"><span>Residential</span><span>Ulcinj, Montenegro</span><span>599 m²</span></div>
 </div>
 
@@ -153,6 +177,16 @@ input[type="range"] { width: 110px; accent-color: var(--accent); }
   </svg>
   <span>Explore freely</span>
 </button>
+<aside class="plan" id="plan" hidden aria-label="Floor plan, showing where you are">
+  <div class="plan-head"><span class="plan-floor" id="plan-floor">Ground floor</span><span class="plan-note">You are here</span></div>
+  <div class="plan-map">
+    <img id="plan-g" alt="" src="data:image/webp;base64,UklGRoQEAABXRUJQVlA4THgEAAAv2INVEBcgEEhxLDMuEEhxLEMtEEhCWXbv+Q+o/kDJse26kXRpgP3xuN4iyqvgJOcvgXdrPUYNexWJHhncpijqUaJIO+sX0f8JwB////H/z0+N5JSRZHihCaB//Pfrr3zxueac86XwyDlfCx8Xn4+PnPO18JFzvhYel+vg3HO+AnjkZU32vgDIxarsfBuf//L6I+fc6P+8/sg5X4bulr9XVN4eWD4WVwCPwu32UVH7/QrgUbgCeBQu+To8WD42oeW2C5wHqfK+g9qp6OhtcPBiu0/btVf3629+sGGcNXlJFZNDBF5ZEVvTp4nbkwmfTjTARuTWPyPJ42CYWHQgOV06U6EKgC7i3DgnBhz2F1/6fLl36z48125dn1mJmLMj/+ZfIhkaGbeRfB8+5R6DB7t1e3oFpFaiDkhzZrMQ0XYSbg7GkUC34MF5C3MmaP36489o7PPIt17p18G5P53+HZ1br+7XZw5fKLfBwbde6de+GffaIDEWEj0SN0cn5cZQoPSNuw1+Sikog4NuEyfbEheJ7IKdlA2MYKfaIqy8uwRsdUN9KkUbOW4VN0bjeuSE0E9YPU+6JZxD4i7DYYJBUGtuIoJ1RpyD7iN2LsV+cWyAUwpoalimzyUpTppKv+wU6LmN7uPCFu8z89aETbDJ3OLQBXjuRGx66C7jweLTR+Br0i+6JTI+JXTWymk+QIY5g+1FBs2ORzf5VKBcj21YjICSZBgKcUMjq5A9rMehCH2zoeOR+ERQsgs8gUR4akVcaHTSUgR0EbpCdq+705YovXg/FE8IGrsggD5hQMI/MZ4GTwgtoKdhZFc4aRwopXQkkXGYkuD5A9FgAYCyfo4YAdiG8PLSRURZJ8oW6++zxonSWatPHl9apDAzZzxvMmeJHAGyQWK1AFC2jgCMnhEASQqQuNyklNNJZPDTOgKwZgKArgKkBQH1MXJgDr0p2ghEbREgWC8EtE0FbF0s3xYkA5KDUiYtDAd3GNk0Kl07QZLnAMBc6gXABrHxEwDaLAIwlwiApBiQ+mEk0S+BuwWUGbFMAlcxVC8ApE40/J0vblLOUWLcYgw/syJfa0bMWXrBeb60xOF9juj50jIPTNEeny5v23QcjL4AElfjnNA5ALomU6WslgNx/Rgsxk6JBjhqsDqem3SLnu/diGtvg8SgJSvIWaHYqUTnAKS1CBznbY0jErE9LZZmKA5FovfeQIauRZQPwmIVm+8K02ZdYxfifGHrxAmA5AYAU9P2dzbIOUtkfKWBDHMm+oQCw6TZxHwZCrJD0Y2vACPmTGOHgtuXodj18fCLCo3nZqyMSKwEjJsSXQOg5CFMzo21Aq0J4Db1iYAdhTMQjkCGc+FWwXoSqGB1odwcsJpWAFsEYL7CcUSHISLVALYfHSE2jQDXBTC2jFgaSQBKkq+JREZstJoA2FoElNiaakJBSQGQSMrgnGh36BoA4/pAsHkHts9IGilrFncFVyUpWNWBQPvPC3QOACsDEjkE3OPzw5wAWAUAEgOYdoE//v/j/5kG">
+    <img id="plan-f" class="off" alt="" src="data:image/webp;base64,UklGRqoCAABXRUJQVlA4TJ4CAAAv2INVEBcgEEhxLDMuEEhxLEMtEEhCWXbv+Q+o/kC3sS1JcnWTwOMm8znRVjx68Bp4l/aMTJ06Rf50s3KpTPTPxKwV0f8JwOX/d9GdlGlI3YggdRYj+QwEzCOIy3+X//6vjZQtc1Kf1RLm4iyxRH9yzrdCzjnfCrecc74V/uWcc8WYc/404imXfy3TpL9g/C8Xv2+ATYXa7zx4jRQAng4oPuWc/6J4+I56AARwOP0GYJmiMGfADse/I46+QpyJrLU+rdrPyfSEk22FZC7ZM0/YCG5a2rbYNVz+u/x3+e/y3wdXjINliLMzrZWP0ibTnuiRbXFuRcLYQWi31eLgQZRgXbhTyubFslEyxHvSWs15nqqiTsE2mWwa8CLOZNNct6n/meveJ3umsUvsf+5CZyjea2NRACfJtFt12afYNS4Z+ZhI7odpj5cE8ENaJpluzvUxKh6SURcHxGOCy+W/XntcujhOfUxGLk97AsDWBBibna0CgM0AnO1LJYA1CeDnKWBtCYilStE0Wq1peIrlQasfFHU/CE62AhrjkND6fBE81XimgKeK88y0QmwVwEr3gwDepNakAAoahQREizxjKOp2EADwewL8IGhUEzQeFAA0ACAOCVVbrQSgxRJg6TQB8KPFAThWrbXQ39FY6r38d/nvQyfO450k07AgSQ2S3IBokWFsSbtgE4lvRXGS8gssVKdA2T/O5FqLNCy0YsT62UxWw8eZOFPUjLIBrJE97HKy4kvGDmtLbUbTAdrhSxYTadTuWxVbgTYM8ibZCh1li6c90SIdoEkHmlKH7YV+/E1h03jaCSN8mhDEsw6Lk/C4FwqbJ22CF2QOr/iCkX2soI/sYhlwdpF8njBSeryUgEg9wdQTBQWM6CV1cS7/v2cL">
+    <svg viewBox="0 0 985 343" aria-hidden="true"><g class="plan-cursor" id="plan-cursor">
+      <path class="cone" d="M0 0 L95 -42 A104 104 0 0 1 95 42 Z"/><circle class="dot" r="13"/>
+    </g></svg>
+  </div>
+</aside>
 <div class="fade" id="fade"></div>
 
 <section class="tour" id="tour" hidden aria-live="polite">
@@ -221,17 +255,17 @@ const SITE_OFFSET = new THREE.Vector3(-21.99, 0.51, 23.68);
 // Guided tour, taken from the website's Oskar Concept project file (model coordinates, metres)
 const TOUR = [
   { title: 'Overview', text: 'A detached two-storey family house on a flat 982 m² plot in Ulcinj, Montenegro. A white cube with a double-height living space, flanked by two lower annexes in white facade brick.',
-    pos: [-38, 24, 42], target: [0, 2, 0] },
+    pos: [-31.5, 20.2, 38.7], target: [0.8, 1.5, 3.0] },   // a little closer, the buildings centred
   { title: 'Garden facade', text: 'Large glass walls open the living area to the south-west: a 119 m² timber-decked terrace and a 402 m² garden.',
     pos: [-26, 4, -2], target: [0, 3, 0] },
   { title: 'Arrival', text: 'Pedestrian and car access from the south-east. Two parking spaces on the plot and a 35 m² garage for two more cars in the brick annex.',
     pos: [-16, 5, 24], target: [0, 2.2, 13] },
   { title: 'Living, dining & kitchen', interior: true, text: 'One 71 m² open space for living, dining and cooking around a central kitchen island, with oak parquet floors, granite-tiled kitchen walls and full-height glazing towards the terrace.',
-    pos: [-2.6, 2.1, -5.2], target: [-0.8, 1.7, 5], fov: 60 },
+    pos: [-1.6, 2.15, 0.0], target: [0.2, 1.5, 7.5], fov: 75 },   // from the middle of the room, facing the kitchen
   { title: 'Upper floor', interior: true, text: 'The inner stair rises to a gallery over the double-height living space and the family’s additional bedrooms. The rest of the floor is a self-contained two-bedroom apartment with its own entrance.',
-    pos: [0.5, 5.2, -5.6], target: [-3.6, 4.0, 0.0], fov: 62 },
+    pos: [0.5, 5.2, -5.6], target: [-3.6, 2.0, 0.0], fov: 75 },   // wider, looking down into the living space
   { title: 'Wellness annex', text: 'The recreation block: a sauna, showers and a 22 m² rest area, linked to the house by terraces.',
-    pos: [-14, 4, -36], target: [0, 2.5, -15] },
+    pos: [-11.6, 5.3, -34.4], target: [3.4, 1.8, -14.4] },   // the annex centred
   { title: 'From above', text: 'A flat roof over 599 m² of gross floor area: 402 m² on the ground floor and 197 m² on the first floor.',
     pos: [0, 75, 0.01], target: [0, 0, 0] },
 ];
@@ -524,6 +558,29 @@ async function goStop(i, instant) {
     f0: camera.fov, f1: to.fov || DEFAULT_FOV, start: performance.now(), dur: reduceMotion ? 1 : 1800,
   };
 }
+/* floor plan cursor: camera position and viewing direction, on the floor the camera is on */
+const PLAN = { x0: -7.0, x1: 8.6, z0: -20.6, z1: 24.2, w: 985, h: 343 };
+const HOUSE = { x0: -4.2, x1: 6.7, z0: -6.2, z1: 10.3 };          // footprint of the two-storey block
+const planCursor = document.getElementById('plan-cursor'), planFloor = document.getElementById('plan-floor');
+const planG = document.getElementById('plan-g'), planF = document.getElementById('plan-f');
+let planUpper = null, planKey = '';
+const fwd = new THREE.Vector3();
+function updatePlan() {
+  const c = camera.position;
+  const inHouse = c.x > HOUSE.x0 && c.x < HOUSE.x1 && c.z > HOUSE.z0 && c.z < HOUSE.z1;
+  const upper = inHouse && c.y > 3.5 && c.y < 7.2;          // inside the first floor, not flying above the roof
+  if (upper !== planUpper) {
+    planUpper = upper; planG.classList.toggle('off', upper); planF.classList.toggle('off', !upper);
+    planFloor.textContent = upper ? 'First floor' : 'Ground floor';
+  }
+  const pad = 14;
+  const u = Math.min(PLAN.w - pad, Math.max(pad, (c.z - PLAN.z0) / (PLAN.z1 - PLAN.z0) * PLAN.w));
+  const v = Math.min(PLAN.h - pad, Math.max(pad, (c.x - PLAN.x0) / (PLAN.x1 - PLAN.x0) * PLAN.h));
+  camera.getWorldDirection(fwd);
+  const ang = Math.atan2(fwd.x, fwd.z) * 180 / Math.PI;        // plan x follows world z, plan y follows world x
+  const key = `${u.toFixed(1)} ${v.toFixed(1)} ${ang.toFixed(1)}`;
+  if (key !== planKey) { planKey = key; planCursor.setAttribute('transform', `translate(${u.toFixed(1)} ${v.toFixed(1)}) rotate(${ang.toFixed(1)})`); }
+}
 /* explore freely: hide the guided tour and let the visitor look around; "Back to tour" returns to the stop they left */
 let freeMode = false;
 const exploreBtn = document.getElementById('explore'), tourEl = document.getElementById('tour');
@@ -643,6 +700,7 @@ async function init() {
     document.getElementById('loader').hidden = true;
     document.getElementById('tour').hidden = false;
     document.getElementById('explore').hidden = false;
+    document.getElementById('plan').hidden = false;
   } catch (e) {
     statusEl.textContent = e.message || 'The model could not be opened.';
     fill.style.background = 'var(--ink-soft)';
@@ -792,6 +850,7 @@ function frame(now) {
   tmp.copy(camera.position).sub(controls.target);
   studio.rotation.y = Math.atan2(tmp.x, tmp.z);
   camera.updateMatrixWorld();
+  updatePlan();
 
   if (!lastCam.equals(camera.matrixWorld)) { lastCam.copy(camera.matrixWorld); sampleN = 0; }
   if (!rig.boxes.length || sampleN >= MAX_SAMPLES) return;   // converged: the canvas keeps the finished frame
